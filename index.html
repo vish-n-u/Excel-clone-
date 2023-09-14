@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Excel Sheet</title>
+</head>
+<body>
+    <div class="page-actions-container">
+        <div class="page-actions" id="home">Home</div>
+        <div class="page-actions">File</div>
+        <div class="page-actions">Insert</div>
+        <div class="page-actions">Layout</div>
+        <div class="page-actions">Help</div>
+    </div>
+    <div class="cellProps-actions-container">
+        <i class="material-icons copy">content_copy</i>
+        <i class="material-icons cut">content_cut</i>
+        <i class="material-icons paste">content_paste</i>
+        <select class="font-family"> 
+            <option value="monospace" class="fontFamily" >Monospace</option>
+            <option value="cursive" class="fontFamily">Cursive</option>
+            <option value="fantasy" class="fontFamily">Fantasy</option>
+            <option value="sans-serif" class="fontFamily">Sans-Serif</option>
+        </select>
+        <select class="font-size" >
+            <option value="14" class="fontSize">14</option>
+            <option value="16" selected class="fontSize">16</option>
+            <option value="18" class="fontSize">18</option>
+            <option value="20" class="fontSize">20</option>
+        </select>
+        <i class="material-icons bold">format_bold</i>
+        <i class="material-icons underline">format_underline</i>
+        <i class="material-icons italics">format_italic</i>
+        
+        <i class="material-icons alignment">format_align_left</i>
+        <i class="material-icons alignment">format_align_center</i>
+        <i class="material-icons alignment">format_align_right</i>
+    <div class="colorFill ">
+        <i class="material-icons paintIconColor" >format_color_fill</i>
+        <input type="color" class="cellColorFill"/>
+    </div >
+    <div class="textFill">
+        <i class="material-icons fontIconColor" >format_color_text</i>
+        <input type="color" class="cellTextColor"/>
+    </div>
+    <div class="uploadDownload" >
+        <div id="upload">
+        <i class="material-icons" style="font-size:26px" id="upload">cloud_upload</i>
+        </div>
+        <i class="material-icons" type="file" style="font-size:26px"  id="download">cloud_download</i>
+    </div>
+    </div>
+    <div class="formula-actions-container">
+        <input id="addressInput" type="text" readonly/>
+        <img  src="https://icons.veryicon.com/png/o/miscellaneous/standard/formula-4.png"/>
+        <input id="formulaInput" type="text"/>
+    </div>
+    <div class="grid-actions-container">
+        <div class="top-left-dummy-box"></div>
+        <div class="cols-container"></div>
+        
+        <div class="cells-container">
+            <div class="address-row-container"></div>
+        </div>
+        
+    </div>
+    <div class="sheet-actions-container">
+        <i class="material-icons sheet-icon" >
+            post_add
+        </i>
+        <div class="sheet-folder-container">
+            <div class="sheet-folder" id="sheet-0">
+                Sheet-1
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="./grid.js"></script>
+    <script src="./cellProperties.js"></script>
+    <script src="./formula.js"></script>
+    <script src="./sheet.js"></script>
+    <script src="./cutCopyPaste.js"></script>
+    <script src="./download.js"></script>
+</body>
+</html>
