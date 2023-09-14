@@ -56,10 +56,14 @@ function getDecodedAddress(val){
 }
 
 // given an address it returns the cell in the dom and the cell in the db (if no address is given takes the address from the addressbar)
-function getCellAndCellInDB(address){
+function getCellAndCellInDB(address,cellMatrixId){
     let [rid,cid] = getDecodedAddress(address)
     let selectedCell = document.querySelector(`[rid='${rid}'][cid='${cid}']`)
-    let selectedCellMatrix = allSheetsCellPropertiesMatrix[currSelectedSheet][rid][cid]
+    console.log("allMatrixIf",cellMatrixId)
+    let matrixId = cellMatrixId>=0?cellMatrixId:currSelectedSheet
+    console.log(matrixId,"matrixId")
+    let selectedCellMatrix = allSheetsCellPropertiesMatrix[matrixId][rid][cid]
+    // console.log(selectedCellMatrix)
     return [selectedCell,selectedCellMatrix]
 }
 

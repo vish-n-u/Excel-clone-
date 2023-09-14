@@ -249,6 +249,8 @@ position: relative;
     background-color: #2c97f6;
     color: white;
     min-width: 80px;
+    text-align: center;
+    border-radius: 5px;
 }
 .sheet-folder:hover{
     cursor: pointer;

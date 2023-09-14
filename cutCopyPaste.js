@@ -12,6 +12,7 @@ let cutBtn = document.querySelector(".cut")
 let copyBtn = document.querySelector(".copy")
 let pasteBtn = document.querySelector(".paste")
 
+
 document.addEventListener("keydown",(e)=>{
     ctrlKey = e.ctrlKey
 })
@@ -33,6 +34,10 @@ for(let x=0;x<row;x++){
 function selectedCell(){
     if(ctrlKey){
         let [selectedCell,selectedCellMatrix] = getCellAndCellInDB(addressBar.value)
+        if(selectedSheetForCopyPaste){
+            if(currSelectedSheet!==selectedSheetForCopyPaste) selectedCellRange = []
+        }
+        selectedSheetForCopyPaste = currSelectedSheet
         if(selectedCellRange.length>=2){
             
             let [selectedCell1,selectedCellMatrix1] = getCellAndCellInDB(selectedCellRange[0])
@@ -41,8 +46,10 @@ function selectedCell(){
             selectedCell2.style.border = "1px solid rgb(202, 204, 204)"
             selectedCellRange = []
         }
+       
         selectedCellRange.push(addressBar.value)
         selectedCell.style.setProperty("border",'3px solid #039c40' ,"important") 
+        
     }
     return
 }
@@ -55,7 +62,7 @@ cutBtn.addEventListener("click",()=>{
     for(let x=selectedStartRow;x<=selectedEndRow;x++){
         for(let y=selectedStartColInNum;y<=selectedEndColInNum;y++){
             let currSelectedCellAddress = String.fromCharCode(y)+x
-            let [currSelectedCell,currSelectedCellInMatrx] = getCellAndCellInDB(currSelectedCellAddress)
+            let [currSelectedCell,currSelectedCellInMatrx] = getCellAndCellInDB(currSelectedCellAddress,selectedSheetForCopyPaste)
             currSelectedCell.innerText =""
         }
     }
@@ -63,6 +70,9 @@ cutBtn.addEventListener("click",()=>{
 
 pasteBtn.addEventListener("click",(e)=>{
    if(selectedCellRange.length<2) return
+//    if(currSelectedSheet!==selectedSheetForCopyPaste){
+//     return alert("You cant paste from a different sheet")
+//    }
    removeSelectedCellBorder()
    sortSelectedRange()
    let [selectedStartColInNum,selectedStartRow] = decodeAddress(selectedCellRange[0])
@@ -70,7 +80,8 @@ pasteBtn.addEventListener("click",(e)=>{
     for(let x=selectedStartRow;x<=selectedEndRow;x++){
         for(let y=selectedStartColInNum;y<=selectedEndColInNum;y++){
             let currSelectedCellAddress = String.fromCharCode(y)+x
-            let [currSelectedCell,currSelectedCellInMatrx] = getCellAndCellInDB(currSelectedCellAddress)
+            let [currSelectedCell,currSelectedCellInMatrx] = getCellAndCellInDB(currSelectedCellAddress,selectedSheetForCopyPaste)
+            console.log(currSelectedCellInMatrx,"}}}")
             
             let  cellInUIToBePastedOnAddress = cellInUIToBePastedOn(selectedStartColInNum,selectedStartRow,x,y)
             updateCopiedCellsMatrix(cellInUIToBePastedOnAddress,currSelectedCellInMatrx)
@@ -80,7 +91,8 @@ pasteBtn.addEventListener("click",(e)=>{
             updateCopiedCellsChildren(cellToBeCopiedOnInMatrix,y,x,cellInUIToBePastedOnAddress,selectedStartColInNum,selectedStartRow,selectedEndColInNum,selectedEndRow)
             updateCopiedCellsFormula(cellToBeCopiedOnInMatrix,currSelectedCellAddress,selectedStartColInNum,selectedStartRow,selectedEndColInNum,selectedEndRow,cellInUIToBePastedOnAddress)
             if(isCutBtnClick){
-                allSheetsCellPropertiesMatrix[currSelectedSheet][x-1][y-65] =returnDefaultCellValue()
+                allSheetsCellPropertiesMatrix[selectedSheetForCopyPaste][x-1][y-65] =returnDefaultCellValue()
+                console.log("in cut",selectedSheetForCopyPaste,x-1,y-65)
             }
         }
             
@@ -205,13 +217,14 @@ function cellInUIToBePastedOn(selectedStartColInNum,selectedStartRow,x,y){
 
 
 function  updateCopiedCellsMatrix(cellInUIToBePastedOnAddress,cellInMatrix){
+    console.log("og cellIn maytric",cellInMatrix)
     let [rid,cid] = getDecodedAddress(cellInUIToBePastedOnAddress)
     allSheetsCellPropertiesMatrix[currSelectedSheet][rid][cid] = JSON.parse(JSON.stringify(cellInMatrix))
 }
 
 function removeSelectedCellBorder(){
-    let [selectedCell1,selectedCellMatrix1] = getCellAndCellInDB(selectedCellRange[0])
-    let [selectedCell2,selectedCellMatrix2] = getCellAndCellInDB(selectedCellRange[1])
+    let [selectedCell1,selectedCellMatrix1] = getCellAndCellInDB(selectedCellRange[0],selectedSheetForCopyPaste)
+    let [selectedCell2,selectedCellMatrix2] = getCellAndCellInDB(selectedCellRange[1],selectedSheetForCopyPaste)
     selectedCell1.style.border = "1px solid rgb(202, 204, 204)"
     selectedCell2.style.border = "1px solid rgb(202, 204, 204)"
 }

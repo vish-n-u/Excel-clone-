@@ -1,7 +1,7 @@
 const sheet = document.querySelector(".sheet-folder-container")
 let sheetIcon = document.querySelector(".sheet-icon")
 let sheetFolder = document.querySelectorAll(".sheet-folder")
-
+let selectedSheetForCopyPaste
 sheetIcon.addEventListener("click",()=>
 sheetIconClick()
 )
@@ -23,10 +23,10 @@ function sheetIconClick(backendSheetData){
     updateCurrSheet(prevSelectedSheet)
     updateAllCells(currSelectedSheet)
     newSheet.addEventListener("mousedown",(e)=>{
-     console.log(e.button,"---e.button")
      if(e.button==0) sheetOnClick(e)
      else if(e.button==1) removeSheet(e)
  })
+
  }
 
 sheetFolder.forEach((element)=>element.addEventListener("mousedown",(e)=>{
@@ -68,6 +68,7 @@ function updateAllCells(id){
             cell.style.color=selectedCellMatrix.fontColor
             cell.style.fontFamily=selectedCellMatrix.fontFamily
             cell.style.fontSize=selectedCellMatrix.fontSize+"px"
+           if(currSelectedSheet!==selectedSheetForCopyPaste) cell.style.border = "1px solid #afb0b3"
         
     }
 }
