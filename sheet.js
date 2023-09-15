@@ -30,7 +30,6 @@ function sheetIconClick(backendSheetData){
  }
 
 sheetFolder.forEach((element)=>element.addEventListener("mousedown",(e)=>{
-    console.log("e.button",e.button)
     if(e.button==0) sheetOnClick(e)
     else if(e.button=2) removeSheet(e)
 
@@ -40,11 +39,9 @@ function sheetOnClick(e){
     let [currCel,currCellInMatrix] = getCellAndCellInDB()
     currCellInMatrix.value = currCel.innerText
     let prevSelectedSheet = document.getElementById(`sheet-${currSelectedSheet}`)
-    console.log("currSelecfjvij",currSelectedSheet,prevSelectedSheet)
     
     const id = e.target.getAttribute("id");
     let sheetId = id.split("-")[1]
-    console.log("currSelecfjvij",currSelectedSheet,currSelectedSheet)
     currSelectedSheet = sheetId  // the sheet variable created in grid.js
     updateCurrSheet(prevSelectedSheet)
     updateAllCells(sheetId)
@@ -54,7 +51,6 @@ function sheetOnClick(e){
 
 
 function updateAllCells(id){
-    console.log(allSheetsCellPropertiesMatrix)
     for(let x =0;x<row;x++){
         for(let y =0;y<col;y++){
             let selectedCellMatrix = allSheetsCellPropertiesMatrix[id][x][y];
@@ -77,7 +73,6 @@ function updateAllCells(id){
 
 function updateCurrSheet(prevSelectedSheet,currentSheet){
     let currSheet  =document.getElementById(`sheet-${currentSheet||currSelectedSheet}`)
-    console.log("currentSheet",currentSheet)
    if(prevSelectedSheet) {prevSelectedSheet.style.backgroundColor="transparent" 
     prevSelectedSheet.style.color = "black"
 }// if prevSelectedSheet exists
@@ -89,9 +84,7 @@ function updateCurrSheet(prevSelectedSheet,currentSheet){
 function removeSheet(e){
     const id = e.target.getAttribute("id").split("-")[1];
     //  let currClickedSheet = id.split("-")[1]
-     console.log("currClickedSheet: " +  e.target.getAttribute("id"),id)
     let currSheetOnDom = document.getElementById(`sheet-${id}`)
-    console.log(currSheetOnDom,"000")
     let response = confirm("Are you sure you want to remove this Sheet?")
     if(!response) return
     let nextAvailableSheet 
@@ -101,9 +94,7 @@ function removeSheet(e){
             alert("You need to have atleast one sheet")
             return
             }
-            console.log(currSheetOnDom)
         }
-        console.log("reached here: " + currSheetOnDom)
         allSheetsCellPropertiesMatrix[id] = []
         currSheetOnDom.remove() // removes the sheet from DOM
         if(nextAvailableSheet||nextAvailableSheet==0)currSelectedSheet = nextAvailableSheet
@@ -116,7 +107,6 @@ function removeSheet(e){
 // it will first check all the previous sheetdbs to check if one of them is not empty and select that
 // else it will go forward and check the same , if all sheetdbs are empty throws an alert
 function nextUndeletedCell(id){
-    console.log("nextUndeletedCell id",id)
     let closestNextLeftArr =""
     let closestNextRightArr=""
     for(let x =0;x<allSheetsCellPropertiesMatrix.length;x++){
@@ -128,7 +118,6 @@ function nextUndeletedCell(id){
             }
         }
     }
-    console.log("nextUndeletedCell closestNextLeftArr",closestNextLeftArr,closestNextRightArr)
     if(closestNextLeftArr!=="") return closestNextLeftArr
     if(closestNextRightArr!=="") return closestNextRightArr
     else return -1

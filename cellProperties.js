@@ -2,7 +2,7 @@ let allSheetsCellPropertiesMatrix = []
 let activeColor = "#0384fc"
 let inactiveColor = "transparent"
 
-
+// console.log("29jd")
 // creates a clone of all cells with the given properties (acts as a databse for each cell)
 function createCellDb(){
     let arr =[]
@@ -59,11 +59,8 @@ function getDecodedAddress(val){
 function getCellAndCellInDB(address,cellMatrixId){
     let [rid,cid] = getDecodedAddress(address)
     let selectedCell = document.querySelector(`[rid='${rid}'][cid='${cid}']`)
-    console.log("allMatrixIf",cellMatrixId)
     let matrixId = cellMatrixId>=0?cellMatrixId:currSelectedSheet
-    console.log(matrixId,"matrixId")
     let selectedCellMatrix = allSheetsCellPropertiesMatrix[matrixId][rid][cid]
-    // console.log(selectedCellMatrix)
     return [selectedCell,selectedCellMatrix]
 }
 
@@ -183,3 +180,22 @@ function styleMenuBasedOnACell(){
 cellsContainer.addEventListener("click",(e)=>{
      styleMenuBasedOnACell()
 })
+
+let lastExitedCellAdd 
+document.addEventListener('click', function(event) {
+    const gridActionsContainer = document.querySelector('.grid-actions-container');
+    
+    // Check if the clicked element is outside of grid-actions-container
+    if (!gridActionsContainer.contains(event.target)) {
+        if(lastExitedCellAdd==addressBar.value) return
+        else{
+            let [lastCell,lastCellInMatrix] = getCellAndCellInDB(lastExitedCellAdd)
+            lastCell.style.border= "2px solid #afb0b3"
+        }
+        lastExitedCellAdd = addressBar.value
+       let [currCell,currCellInMatrix] = getCellAndCellInDB()
+       currCell.style.border = '2px solid rgb(98, 97, 96)'
+       currCell.style.borderRadius= '3px'
+       console.log("hewr")
+    }
+  });

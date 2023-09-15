@@ -63,7 +63,7 @@ cutBtn.addEventListener("click",()=>{
         for(let y=selectedStartColInNum;y<=selectedEndColInNum;y++){
             let currSelectedCellAddress = String.fromCharCode(y)+x
             let [currSelectedCell,currSelectedCellInMatrx] = getCellAndCellInDB(currSelectedCellAddress,selectedSheetForCopyPaste)
-            currSelectedCell.innerText =""
+            setCellInUIToDefault(currSelectedCell)
         }
     }
 })
@@ -81,7 +81,6 @@ pasteBtn.addEventListener("click",(e)=>{
         for(let y=selectedStartColInNum;y<=selectedEndColInNum;y++){
             let currSelectedCellAddress = String.fromCharCode(y)+x
             let [currSelectedCell,currSelectedCellInMatrx] = getCellAndCellInDB(currSelectedCellAddress,selectedSheetForCopyPaste)
-            console.log(currSelectedCellInMatrx,"}}}")
             
             let  cellInUIToBePastedOnAddress = cellInUIToBePastedOn(selectedStartColInNum,selectedStartRow,x,y)
             updateCopiedCellsMatrix(cellInUIToBePastedOnAddress,currSelectedCellInMatrx)
@@ -92,7 +91,6 @@ pasteBtn.addEventListener("click",(e)=>{
             updateCopiedCellsFormula(cellToBeCopiedOnInMatrix,currSelectedCellAddress,selectedStartColInNum,selectedStartRow,selectedEndColInNum,selectedEndRow,cellInUIToBePastedOnAddress)
             if(isCutBtnClick){
                 allSheetsCellPropertiesMatrix[selectedSheetForCopyPaste][x-1][y-65] =returnDefaultCellValue()
-                console.log("in cut",selectedSheetForCopyPaste,x-1,y-65)
             }
         }
             
@@ -217,7 +215,6 @@ function cellInUIToBePastedOn(selectedStartColInNum,selectedStartRow,x,y){
 
 
 function  updateCopiedCellsMatrix(cellInUIToBePastedOnAddress,cellInMatrix){
-    console.log("og cellIn maytric",cellInMatrix)
     let [rid,cid] = getDecodedAddress(cellInUIToBePastedOnAddress)
     allSheetsCellPropertiesMatrix[currSelectedSheet][rid][cid] = JSON.parse(JSON.stringify(cellInMatrix))
 }
@@ -245,4 +242,12 @@ function returnDefaultCellValue(){
         formula:""
     }
     return obj
+}
+
+
+function setCellInUIToDefault(currSelectedCell){
+    currSelectedCell.innerText=""
+    currSelectedCell.style.backgroundColor="white"
+
+    
 }

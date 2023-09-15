@@ -142,7 +142,6 @@ position: relative;
     height:calc(100vh - 12rem);
     position: relative;
     overflow: scroll;
-    /* background-color: rgb(75, 192, 192);; */
 }
 
 
@@ -171,7 +170,7 @@ position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #dfe4ea;
+    border: 1px solid #a2a3a4;
     
   
    }
@@ -193,7 +192,7 @@ position: relative;
     
 }
 .address-row{
-    border: 1px solid rgb(136, 145, 145);
+    border: 1px solid #afb0b3;
     text-align: center;
     display: flex;  
     align-items: center;

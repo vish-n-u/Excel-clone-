@@ -3,9 +3,17 @@ for (let x=0;x<row;x++){
     for(let y=0;y<col;y++){
          let cells = document.querySelector(`[rid='${x}'][cid='${y}']`);
         cells.addEventListener("blur",(e)=>{
+            
             let [selectedCell,selectedCellMatrix] = getCellAndCellInDB()
             selectedCellMatrix.value = cells.innerText
             depthFirstUpdate(selectedCellMatrix)
+        })
+        cells.addEventListener("click",()=>{
+            if(lastExitedCellAdd){
+                let [lastCell,lastCellInMatrix] = getCellAndCellInDB(lastExitedCellAdd)
+            lastCell.style.border= "1px solid #afb0b3"
+            lastExitedCellAdd =""
+            }
         })
     }
 }

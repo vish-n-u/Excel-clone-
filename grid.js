@@ -1,7 +1,7 @@
 let row = 100 // it denotes the numbers, but since it is used to locate a grid in its row
 let col = 26
 let currSelectedSheet = 0
-// console.log = function() {}
+  console.log = function() {}
 
 let addressColContainer = document.querySelector(".cols-container")
 let addressBar = document.querySelector("#addressInput")
